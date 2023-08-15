@@ -39,7 +39,7 @@ router.post("/admins/login",async (req,res)=>{
     try{
         const authenticatedAdmin = await Admin.checkLoginCredentials(req.body.email,req.body.pass);
         const token = await authenticatedAdmin.generateAuthToken();
-        res.cookie("Pupils_Hub",token,{
+        res.cookie("Aspirants_Abode",token,{
             expires:new Date(Date.now() + 24*60*60*1000),
             httpOnly:true
         });
@@ -54,10 +54,10 @@ router.post("/admins/login",async (req,res)=>{
 router.get("/aLogout",adminAuth, async (req,res)=>{
     try{
         req.admin.tokens = req.admin.tokens.filter((currElement)=>{
-            return currElement.token !== req.cookies.Pupils_Hub;
+            return currElement.token !== req.cookies.Aspirants_Abode;
         })
         await req.admin.save();
-        res.clearCookie("Pupils_Hub");
+        res.clearCookie("Aspirants_Abode");
         res.redirect("/aLogin");
     }
     catch(error){

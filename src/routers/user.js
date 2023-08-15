@@ -106,7 +106,7 @@ router.post("/users/login",async (req,res)=>{
     try{
         const authenticatedUser = await User.checkLoginCredentials(req.body.email,req.body.pass);
         const token = await authenticatedUser.generateAuthToken();
-        res.cookie("Pupils_Hub",token,{
+        res.cookie("Aspirants_Abode",token,{
             expires:new Date(Date.now() + 24*60*60*1000),
             httpOnly:true
         });
@@ -123,10 +123,10 @@ router.post("/users/login",async (req,res)=>{
 router.get("/logout",auth, async (req,res)=>{
     try{
         req.user.tokens = req.user.tokens.filter((currElement)=>{
-            return currElement.token !== req.cookies.Pupils_Hub;
+            return currElement.token !== req.cookies.Aspirants_Abode;
         })
         await req.user.save();
-        res.clearCookie("Pupils_Hub");
+        res.clearCookie("Aspirants_Abode");
         res.redirect("/login");
     }
     catch(error){

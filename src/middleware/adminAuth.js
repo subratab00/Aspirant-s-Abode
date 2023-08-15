@@ -6,7 +6,7 @@ const SECRET = process.env.SECRET_KEY;
 const adminAuth = async (req, res, next) => {
     try {
         // const token = req.header("Authorization").replace("Bearer", "").trim();
-        const token = req.cookies.Pupils_Hub;
+        const token = req.cookies.Aspirants_Abode;
         const decoded = jwt.verify(token, SECRET);
 
         const authAdmin = await Admin.findOne({ _id: decoded._id, "tokens.token": token });
